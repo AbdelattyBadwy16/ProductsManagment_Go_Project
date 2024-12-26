@@ -1,7 +1,9 @@
 package brand
 
 import (
+	"encoding/json"
 	"project/Database/models"
+	redis "project/ExternalService/Redis"
 )
 
 func CreateBrandService(request CreateRequest) (models.Brand, error) {
@@ -10,15 +12,25 @@ func CreateBrandService(request CreateRequest) (models.Brand, error) {
 	if err != nil {
 		return models.Brand{}, err
 	}
+	// Clear cache
+	redis.RemoveValue("Brands")
 	return brand, nil
 }
 
 func GetALlBrandsService() ([]models.Brand, error) {
-	brand, err := AllBrand()
+	// check cache
+	res, err := redis.GetValue("Brands")
+	if err == nil {
+		var brands []models.Brand
+		err = json.Unmarshal([]byte(res), &brands)
+		return brands, nil
+	}
+	brands, err := AllBrand()
 	if err != nil {
 		return []models.Brand{}, err
 	}
-	return brand, nil
+	redis.SetValue("Brands", brands)
+	return brands, nil
 }
 
 func DeleteBrandService(request DeleteRequest) error {
@@ -26,6 +38,8 @@ func DeleteBrandService(request DeleteRequest) error {
 	if err != nil {
 		return err
 	}
+	// Clear cache
+	redis.RemoveValue("Brands")
 	return nil
 }
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"project/Database"
+	redis "project/ExternalService/Redis"
 	"project/brand"
 	"project/product"
 	"project/tag"
@@ -13,8 +14,9 @@ import (
 func main() {
 	godotenv.Load()
 	Database.InitDB()
+	redis.Init()
 	app := iris.New()
-	
+
 	product.Routes(app)
 	brand.Routes(app)
 	tag.Routes(app)
