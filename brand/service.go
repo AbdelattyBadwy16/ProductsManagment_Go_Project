@@ -29,7 +29,7 @@ func GetALlBrandsService() ([]models.Brand, error) {
 	if err != nil {
 		return []models.Brand{}, err
 	}
-	redis.SetValue("Brands", brands)
+	redis.SetValue("Brandsg", brands)
 	return brands, nil
 }
 
