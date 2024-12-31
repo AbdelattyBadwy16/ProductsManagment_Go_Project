@@ -16,7 +16,6 @@ func main() {
 	Database.InitDB()
 	redis.Init()
 	app := iris.New()
-	// Custom CORS middleware
 	app.UseRouter(func(ctx iris.Context) {
 		ctx.Header("Access-Control-Allow-Origin", "*")
 		ctx.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
