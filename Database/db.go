@@ -23,7 +23,7 @@ func InitDB() {
 		fmt.Println("Failed to connect to the database: %v", err)
 	}
 
-	err = DB.AutoMigrate(&models.Brand{}, &models.Product{}, &models.Tag{})
+	err = DB.AutoMigrate(&models.Brand{}, &models.Product{}, &models.Tag{},&models.User{})
 
 	if err != nil {
 		fmt.Println("Faild To Migrate. ", err)

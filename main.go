@@ -6,7 +6,7 @@ import (
 	"project/brand"
 	"project/product"
 	"project/tag"
-
+    "project/auth"
 	"github.com/joho/godotenv"
 	"github.com/kataras/iris/v12"
 )
@@ -29,6 +29,6 @@ func main() {
 	product.Routes(app)
 	brand.Routes(app)
 	tag.Routes(app)
-
+	auth.Routes(app)
 	app.Listen(":8081")
 }
